@@ -1,7 +1,10 @@
 // Locate root folder with `@/` for imports
+// even if the file is nested in a subfolder
+
 {
   "compilerOptions": {
-    "jsx": "react",
+    // Module Aliases
+    "baseUrl": ".",
     "paths": {
       "@/*": ["./*"]
     }
