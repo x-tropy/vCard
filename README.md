@@ -54,8 +54,9 @@ Blocklet 本地开发环境依赖于 Blocklet server。
 ## 初始配置
 
 1. 增加 `jsconfig.json` 配置文件，方便 `import` 时引用根目录
-2. TailwindCSS
-3. 更新 Next.js 至最新版
+2. 配置 TailwindCSS，详见[文档](https://tailwindcss.com/docs/guides/nextjs)
+3. 更新 Next.js 至最新版 `pnpm add next@latest react@latest react-dom@latest`
+4. 删除 `pages` 文件夹，新建 `app` 文件夹，以及 `components` 文件夹
 
 ## 其他
 
