@@ -1,0 +1,8 @@
+name = "vcard"
+main = "src/index.js"
+compatibility_date = "2023-11-21"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "vcard"
+database_id = "d8a159bd-5b28-4171-81d8-8799a069abab"
