@@ -1,4 +1,4 @@
-# 开发笔记
+![vcard logo](./public/logo_vcard.png)
 
 ## Blocklet Server
 
@@ -53,7 +53,7 @@ Blocklet 本地开发环境依赖于 Blocklet server。
 
 ## 初始配置
 
-1. 增加 `jsconfig.json` 配置文件，方便 `import` 时引用根目录
+1. 增加 `jsconfig.json` 配置文件，方便 `import` 时引用根目录。详见[文档](https://nextjs.org/docs/app/building-your-application/configuring/absolute-imports-and-module-aliases)
 2. 配置 TailwindCSS，详见[文档](https://tailwindcss.com/docs/guides/nextjs)
 3. 更新 Next.js 至最新版 `pnpm add next@latest react@latest react-dom@latest`
 4. 删除 `pages` 文件夹，新建 `app` 文件夹，以及 `components` 文件夹
@@ -72,10 +72,10 @@ slogan: Use vCard to enhance your online presence
 
 - 名字：名字可以是真名或昵称，系统不作限制。需要支持 emoji。
 - 头像：为了方便编辑，可以留存历史上传的照片。需要支持随时调整（尺寸、裁切位置）、或更新头像。
-- 简介：纯文本框。需要支持 emoji；如时间允许可以考虑支持 markdown。
+- 简介：纯文本框。需要支持 emoji；如时间允许可以考虑支持 markdown。由于简介比较长，可以引入 AI 为用户检查语法错、帮助文案构思、补充内容等。
 - 地址：当前所在位置（国家）。
 - 生日（待定）
-- 工作状态：远程办公 / 现场办公 / 寻找机会中
+- 工作状态：远程办公 / 现场办公 / 正在看新机会
 - 联系方式：手机和邮箱。可以勾选控制是否对大众可见。提交前需要通过验证。手机前缀为国家电话编码，跨国通话、或发送验证短信时会用到。
 - 社交帐户链接：支持几个流行社交网络平台，例如：LinkedIn, GitHub, Instagram, Twitter。
 
@@ -135,6 +135,43 @@ https://en.m.wikipedia.org/wiki/List_of_country_calling_codes
 社交帐户只记录用户 id，在前端拼成完整的 URL。
 
 生日、所在地、工作状态等字段用 TEXT 保存，后端不作强校验，前端校验格式和允许的值范围即可。
+
+## Cloudflare Worker
+
+`pnpm create cloudflare@latest` 新建一个 Cloudflare Worker，用于负责与数据库的交互，亦即提供 data API。
+
+- `/api/profile/:user_id`：取出 profile 所有字段，包括头像。
+- `/api/avatar/:user_id`：取出单个头像。
+- `/api/avatars/:user_id`：取出最近使用的头像（最多 5 个）
+- `/api/countries`：取出所有国家的信息。
+- `/api/check/user/:user_id`：检查某个 User ID 是否已经被占用了，占用则不能使用该 ID。
+
+### 数据库 Binding
+
+于 `wrangler.toml` 中增加绑定：
+
+```
+[[d1_databases]]
+binding = "DB"
+database_name = "vcard"
+database_id = "d8a159bd-5b28-4171-81d8-8799a069abab"
+```
+
+### Schema 文件
+
+```
+drop table if exists "profiles";
+
+create table "profiles" (
+  "id" integer primary key autoincrement,
+  "name" text not null,
+  "user_id" text not null,
+  "created_at" datetime default current_timestamp,
+  "updated_at" datetime default current_timestamp
+);
+
+insert into "profiles" ("name", "user_id") values ('Super Pro', 'demo');
+```
 
 ## 其他
 
