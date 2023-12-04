@@ -1,5 +1,5 @@
 name = "vcard"
-main = "src/index.js"
+main = "src/worker.js"
 compatibility_date = "2023-11-21"
 
 [[d1_databases]]

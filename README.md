@@ -173,6 +173,22 @@ create table "profiles" (
 insert into "profiles" ("name", "user_id") values ('Super Pro', 'demo');
 ```
 
+关注 wrangler dev 运行时的报错 "Error: D1_ERROR: no such table: users"，为与数据库相关错误。
+
+### 前后端约定
+
+给每个 API 请求返回结果，返回格式：
+
+```
+{
+  status: 'error' | 'success',
+  msg: 'error message or success message',
+  result: OBJECT
+}
+```
+
+如果遇到 error 时，result 可以缺失。成功情况必须返回 result，且一定是一个 JavaScript Object。
+
 ## 其他
 
 ### 文件组织
