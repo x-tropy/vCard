@@ -1,0 +1,9 @@
+// Locate root folder with `@/` for imports
+{
+  "compilerOptions": {
+    "jsx": "react",
+    "paths": {
+      "@/*": ["./*"]
+    }
+  }
+}
