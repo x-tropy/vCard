@@ -58,6 +58,84 @@ Blocklet 本地开发环境依赖于 Blocklet server。
 3. 更新 Next.js 至最新版 `pnpm add next@latest react@latest react-dom@latest`
 4. 删除 `pages` 文件夹，新建 `app` 文件夹，以及 `components` 文件夹
 
+## 场景构思（模拟）
+
+### 一句话产品定位
+
+vCard 是一个简洁的在线名片，用户可以维护一个专属于自己的 profile，用它来方便别人了解自己、联系自己。
+
+slogan: Use vCard to enhance your online presence
+
+### 内容设计
+
+根据使用场景，vCard 可能包含以下几部分内容：
+
+- 名字：名字可以是真名或昵称，系统不作限制。需要支持 emoji。
+- 头像：为了方便编辑，可以留存历史上传的照片。需要支持随时调整（尺寸、裁切位置）、或更新头像。
+- 简介：纯文本框。需要支持 emoji；如时间允许可以考虑支持 markdown。
+- 地址：当前所在位置（国家）。
+- 生日（待定）
+- 工作状态：远程办公 / 现场办公 / 寻找机会中
+- 联系方式：手机和邮箱。可以勾选控制是否对大众可见。提交前需要通过验证。手机前缀为国家电话编码，跨国通话、或发送验证短信时会用到。
+- 社交帐户链接：支持几个流行社交网络平台，例如：LinkedIn, GitHub, Instagram, Twitter。
+
+### 数据库设计
+
+命名约定：表名用复数，列名用下划线相连。当引用其他表的 ID 时，使用单数的表名，例如：avatar_id，profile_id
+
+表一：countries
+
+- id 主键
+- name 国家名 TEXT
+- country_calling_code 国家电话编码 TEXT
+
+注意：存在两个国家用同一编码的情况，例如：加拿大和美国，都是 (+1)。
+
+表二：avatars
+
+- id 主键
+- profile_id 头像所属 profile INTEGER
+- avatar 图片 BLOB
+
+表三：profiles
+
+- id 主键
+- name 展示名 TEXT
+- user_id 用户唯一 ID TEXT
+- about 简介 TEXT
+- birth_date 生日 TEXT
+- location_country 所在地 TEXT
+- working_status 工作状态 TEXT
+- phone 手机号 TEXT
+- country_calling_code 国家电话编码 TEXT（号码归属地未必与所在地相同）
+- phone_is_public 手机号公开与否 INTEGER
+- email 邮箱 TEXT
+- email_is_public 邮箱公开与否 INTEGER
+- linkedin_user_id TEXT
+- github_user_id TEXT
+- twitter_user_id TEXT
+- instagram_user_id TEXT
+- avatar_id 头像 ID BLOB（当前在用头像的指针）
+
+思考：头像图片并不大，在前端做了压缩和文件大小检验的情况下，直接用数据库存储不会带来性能问题，反而能和其他数据一并发给前端，减少网络延迟。
+
+注意：user_id 会用于生成可分享的链接，必须是唯一的，但是也允许修改（不可过于频繁）。
+
+### 数据格式细节
+
+手机号由两部分做成，国家电话编码最多 3 位，手机号总共最多 15 位（含国家电话编码）
+
+> The specification divides the digit string into a country code of one to three digits, and the subscriber telephone number of a maximum of twelve digits.
+
+https://en.m.wikipedia.org/wiki/E.164
+https://en.m.wikipedia.org/wiki/List_of_country_calling_codes
+
+记录「公开与否」的这类 flag 值本应用 Bool 记录，但是 Cloudflare Worker D1 不支持，改用数字 0 或 1 替代（1 代表公开）。
+
+社交帐户只记录用户 id，在前端拼成完整的 URL。
+
+生日、所在地、工作状态等字段用 TEXT 保存，后端不作强校验，前端校验格式和允许的值范围即可。
+
 ## 其他
 
 ### 文件组织
