@@ -27,7 +27,6 @@ export default async (c) => {
 		});
 	}
 
-	// TODO: Date.now() 可以直接作为值传给 SQL 语句吗？
 	// Execute update
 	const stmt3 = c.env.DB.prepare('UPDATE profiles SET user_id = ?, name = ?, updated_at = ? WHERE id = ?').bind(
 		user_id,
