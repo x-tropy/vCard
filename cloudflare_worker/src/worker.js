@@ -2,13 +2,17 @@ import { Hono } from 'hono';
 import { prettyJSON } from 'hono/pretty-json';
 import { cors } from 'hono/cors';
 
+// Split concerns
+import getProfile from './getProfile.js';
+import updateProfile from './updateProfile.js';
+
 const api = new Hono().basePath('/api');
 api.use('/*', prettyJSON({ space: 2 }));
 api.use('/*', cors());
 
 export default api;
 
-// List of all available endpoints
+// List all endpoints
 api.get('/', (c) => {
 	return c.json({
 		'💡 Tips': 'use the ?pretty query param to get a pretty json response',
@@ -21,36 +25,8 @@ api.get('/', (c) => {
 	});
 });
 
-// Get one user profile
-api.get('/profile/:user_id', async (c) => {
-	const user_id = c.req.param('user_id');
+// Get a profile
+api.get('/profile/:user_id', getProfile);
 
-	const stmt = c.env.DB.prepare('SELECT * FROM profiles WHERE user_id = ?').bind(user_id);
-
-	const { results } = await stmt.all();
-
-	console.log('\n>>>>>>>>>>', results, '<<<<<<<<<<\n');
-
-	// Handle exceptions first
-	if (results.length === 0) {
-		return c.json({
-			status: 'error',
-			msg: 'user not found',
-		});
-	}
-
-	if (results.length > 1) {
-		return c.json({
-			status: 'error',
-			msg: 'multiple users found',
-		});
-	}
-
-	// Success
-	const profile = results[0];
-	return c.json({
-		status: 'success',
-		msg: 'user found',
-		result: profile,
-	});
-});
+// Update a profile
+api.post('/profile', updateProfile);

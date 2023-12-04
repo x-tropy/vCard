@@ -18,6 +18,8 @@
 
 Blocklet 本地开发环境依赖于 Blocklet server。
 
+[本地 dashboard 链接](http://192.168.0.242/.well-known/server/admin/)
+
 ### 关闭
 
 `blocklet server stop`
@@ -48,6 +50,8 @@ Blocklet 本地开发环境依赖于 Blocklet server。
 1. 在 Blocklet Server 的控制台新建一个 Blocklet App
 2. 记下 Blocklet App 的 DID 地址，填入 `package.json` 的 `app-id` 字段
 3. `pnpm deploy` 进行部署
+
+vCard 的 DID：`zNKcJDvG6v6JFwhz5PjXH9BogSkqx4rynmoL`
 
 注意：Blocklet 是一个组件，Blocklet Application 才是独立的完整应用，详见[文档](https://developer.blocklet.io/docs/zh/885b49e7-8ea8-4877-997e-c163d1c5d669)。
 
@@ -140,8 +144,10 @@ https://en.m.wikipedia.org/wiki/List_of_country_calling_codes
 
 `pnpm create cloudflare@latest` 新建一个 Cloudflare Worker，用于负责与数据库的交互，亦即提供 data API。
 
-- `/api/profile/:user_id`：取出 profile 所有字段，包括头像。
-- `/api/avatar/:user_id`：取出单个头像。
+- `/api/profile/:user_id (GET)`：取出 profile 所有字段，包括头像。
+- `/api/profile/:user_id (POST)`：更新 profile，忽略值为 null 的字段。
+- `/api/avatar/:user_id (GET)`：取出单个头像。
+- `/api/avatar/:user_id (POST)`：更新单个头像。
 - `/api/avatars/:user_id`：取出最近使用的头像（最多 5 个）
 - `/api/countries`：取出所有国家的信息。
 - `/api/check/user/:user_id`：检查某个 User ID 是否已经被占用了，占用则不能使用该 ID。
@@ -182,12 +188,33 @@ insert into "profiles" ("name", "user_id") values ('Super Pro', 'demo');
 ```
 {
   status: 'error' | 'success',
-  msg: 'error message or success message',
+  message: 'error message or success message',
   result: OBJECT
 }
 ```
 
 如果遇到 error 时，result 可以缺失。成功情况必须返回 result，且一定是一个 JavaScript Object。
+
+### 数据格式校验（在更新 DB 表时）
+
+前端校验：
+
+- char set：仅使用了指定字符集
+- [5-20]：长度在 5 ～ 20 之间，开区间
+
+后端校验：
+
+- unique：表中没有同样值的行
+- cool down：操作频繁遇到的强制冷却时间已经过去
+
+| fields         | format in DB | nullable | Backend     | Frontend         |
+| -------------- | ------------ | -------- | ----------- | ---------------- |
+| **id**         | INTEGER      |          |             |                  |
+| **name**       | TEXT         | not null |             | [5-20], char set |
+| **user_id**    | TEXT         | not null | unique      |                  |
+| **updated_at** | DATETIME     |          | cooled down |                  |
+
+注意：为了降低理解成本，提升反应速度，统一用积极的口吻表达校验规则。不关注的字段不作标注，例如：id 不会被修改、updated_at 是自动生成的。
 
 ## 其他
 

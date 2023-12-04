@@ -12,6 +12,7 @@ pnpm-lock.yaml
 version
 package-lock.json
 cloudflare_worker/.wrangler
+.blocklet
 
 
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.

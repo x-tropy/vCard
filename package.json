@@ -2,6 +2,7 @@
   "name": "vcard",
   "version": "0.1.0",
   "private": true,
+  "app-id": "zNKcJDvG6v6JFwhz5PjXH9BogSkqx4rynmoL",
   "scripts": {
     "dev": "blocklet dev",
     "start": "nodemon -w api api/index.js",
