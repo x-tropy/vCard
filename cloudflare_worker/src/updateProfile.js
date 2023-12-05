@@ -3,7 +3,7 @@ import addNft from './addNft';
 
 export default async (c) => {
 	const formData = await c.req.json();
-	console.log('\n>>>>>>>>>>updateProfile\n', formData, '\n<<<<<<<<<<\n');
+	console.log('\n>>>>>>>>\n', 'updateProfile', '\n', formData, '\n<<<<<<<<\n');
 	const { id, user_id, name } = formData;
 
 	// Satisfy rule: unique user_id
@@ -15,7 +15,7 @@ export default async (c) => {
 	if (results.length > 0 && results[0].id != id) {
 		return c.json({
 			status: 'error',
-			msg: 'user_id is occupied',
+			message: 'user_id is occupied',
 		});
 	}
 
@@ -28,7 +28,7 @@ export default async (c) => {
 	if (!isCooledDown(results2[0].updated_at, 10)) {
 		return c.json({
 			status: 'error',
-			msg: 'update too frequent',
+			message: 'update too frequent',
 		});
 	}
 
@@ -46,7 +46,7 @@ export default async (c) => {
 	if (!success) {
 		return c.json({
 			status: 'error',
-			msg: 'update failed',
+			message: 'update failed',
 		});
 	}
 
@@ -55,7 +55,7 @@ export default async (c) => {
 
 	return c.json({
 		status: 'success',
-		msg: 'update success',
+		message: 'update success',
 	});
 };
 

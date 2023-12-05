@@ -134,7 +134,9 @@ slogan: Use vCard to enhance your online presence
 
 注意：数据库中只存储可读的时间或日期格式，需要运算时由后端代码换算成值。
 
-#### ntfs 表
+#### nfts 表
+
+用区块链强化线上社交行为的可信度和意义。思路类似 [Lens: The social layer for Web3](https://www.lens.xyz/)。
 
 - id 主键
 - profile_id 外键 INTEGER
@@ -292,4 +294,4 @@ blocklet deploy .blocklet/bundle --endpoint {your blocklet server url} --access-
 5. 用户体验：快速高效地产出功能不是唯一目标，还要考虑界面美观、交互友好、流程顺畅、文案易懂。
 6. 工作流程：即使是独立完成，也会产出代码、测试用例、设计文件等各个交付物，而不是一锅乱炖。
 
-这个作品可以体现我在产品构思、编程、UI 设计的深厚积累，以及对 AI 和区块链应用的热情。
+这个作品可以体现我在产品构思、编程、UI 设计的深厚积累，以及对 AI 和区块链应用的热情。唯一缺憾是没有用 TypeScript 做强类型检查。

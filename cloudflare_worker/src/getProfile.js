@@ -6,8 +6,7 @@ export default async (c) => {
 
 	const { results } = await stmt.all();
 
-	console.log('\n>>>>>>>>>>getProfile\n', results, '\n<<<<<<<<<<\n');
-
+	console.log('\n>>>>>>>>\n', 'getProfile', '\n', results, '\n<<<<<<<<\n');
 	// Handle exception
 	if (results.length === 0) {
 		return c.json({
