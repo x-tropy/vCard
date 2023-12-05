@@ -1,4 +1,4 @@
-![vcard logo](./public/coverimage_github.png)
+![vcard logo](./public/github_cover_image.png)
 
 > A simplistic online social profile app, augmented with AI and Blockchain.
 
