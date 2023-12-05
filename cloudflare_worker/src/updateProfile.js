@@ -1,4 +1,5 @@
 import { formattedDate, formattedTime } from './utils';
+import addNft from './addNft';
 
 export default async (c) => {
 	const formData = await c.req.json();
@@ -50,6 +51,8 @@ export default async (c) => {
 	}
 
 	// Success
+	// Add a NFT record
+
 	return c.json({
 		status: 'success',
 		msg: 'update success',

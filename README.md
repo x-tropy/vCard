@@ -2,6 +2,8 @@
 
 > A simplistic online social profile app, augmented with AI and Blockchain.
 
+<!-- make a gif, to showcase the UI -->
+
 ## Blocklet Server
 
 ### 安装
@@ -68,7 +70,7 @@ vCard 的 DID：`zNKcJDvG6v6JFwhz5PjXH9BogSkqx4rynmoL`
 
 ### 一句话产品定位
 
-vCard 是一个简洁的在线名片，用户可以维护一个专属于自己的 profile，用它来方便别人了解自己、联系自己。
+vCard 是一个简洁的在线名片，Web3 爱好者可以维护一个专属于自己的 profile，用它来方便别人了解自己、联系自己。
 
 slogan: Use vCard to enhance your online presence
 
@@ -84,6 +86,8 @@ slogan: Use vCard to enhance your online presence
 - 工作状态：远程办公 / 现场办公 / 正在看新机会
 - 联系方式：手机和邮箱。可以勾选控制是否对大众可见。提交前需要通过验证。手机前缀为国家电话编码，跨国通话、或发送验证短信时会用到。
 - 社交帐户链接：支持几个流行社交网络平台，例如：LinkedIn, GitHub, Instagram, Twitter。
+
+使用该应用创建自己的名片前，需要个人钱包绑定登录（该项目省略），每一次的在线行为，例如：修改资料、发表内容、与别人互动，都会被记录，且被 mint 成为一个个 NFT。
 
 ### 数据库设计
 
@@ -128,11 +132,16 @@ slogan: Use vCard to enhance your online presence
 时间格式：YYYY-MM-DD HH:MM:SS
 日期格式：YYYY-MM-DD
 
+注意：数据库中只存储可读的时间或日期格式，需要运算时由后端代码换算成值。
+
 #### ntfs 表
 
 - id 主键
 - profile_id 外键 INTEGER
-- record 交互记录 JSON（包括修改 profile，给 profile 评论点赞等）
+- hash 唯一哈希值 TEXT
+- transaction_id 智能合约公证记录 TEXT
+- log 交互记录 JSON（包括修改 profile，给 profile 评论点赞等）
+- created_at 创建时间 TIMESTAMP
 
 思考：头像图片并不大，在前端做了压缩和文件大小检验的情况下，直接用数据库存储不会带来性能问题，反而能和其他数据一并发给前端，减少网络延迟。
 
