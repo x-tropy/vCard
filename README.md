@@ -65,6 +65,7 @@ vCard 的 DID：`zNKcJDvG6v6JFwhz5PjXH9BogSkqx4rynmoL`
 2. 配置 TailwindCSS，详见[文档](https://tailwindcss.com/docs/guides/nextjs)
 3. 更新 Next.js 至最新版 `pnpm add next@latest react@latest react-dom@latest`
 4. 删除 `pages` 文件夹，新建 `app` 文件夹，以及 `components` 文件夹
+5. 在 layout.js 中添加 suppressHydrationWarning，避免浏览器插件导致的报错
 
 ## 场景构思（模拟）
 
@@ -88,6 +89,8 @@ slogan: Use vCard to enhance your online presence
 - 社交帐户链接：支持几个流行社交网络平台，例如：LinkedIn, GitHub, Instagram, Twitter。
 
 使用该应用创建自己的名片前，需要个人钱包绑定登录（该项目省略），每一次的在线行为，例如：修改资料、发表内容、与别人互动，都会被记录，且被 mint 成为一个个 NFT。
+
+## 功能开发
 
 ### 数据库设计
 
@@ -149,7 +152,7 @@ slogan: Use vCard to enhance your online presence
 
 注意：user_id 会用于生成可分享的链接，必须是唯一的，但是也允许修改（不可过于频繁，10 秒冷却时间）。
 
-### 数据格式细节
+### 格式细节说明
 
 手机号由两部分做成，国家电话编码最多 3 位，手机号总共最多 15 位（含国家电话编码）
 
@@ -163,6 +166,24 @@ https://en.m.wikipedia.org/wiki/List_of_country_calling_codes
 社交帐户只记录用户 id，在前端拼成完整的 URL。
 
 生日、所在地、工作状态等字段用 TEXT 保存，后端不作强校验，前端校验格式和允许的值范围即可。
+
+### 缓存管理
+
+用 `revalidateTag` 清缓存。原则是非必要就别清除缓存。清缓存时机：
+
+1. 更新名片成功：如果 `user_id` 不变，提交成功就清除缓存；如果 `user_id` 也变了，那么在访问新的名片页面时在 `db.js` 里清除缓存。因为 `user_id` 被用于作为名片页面链接的一部分，如果马上清缓存会导致当前页面无法显示。
+2. 更新名片失败：也要马上清除缓存，因为失败的 response 也会被缓存下来。如不清除，即使下次更新成功了，仍然会显示上一次失败的结果。
+
+## UI 设计
+
+### 响应式布局
+
+- Main 区域居中
+- 限制 Main 区域最宽为 1280px (xl)
+- 当 Main 区域小于 768px (md) 时，使用纵向布局
+- 当 Main 区域更大时，横向布局
+
+![responsive layout](./public/responsive_layout.png)
 
 ## Cloudflare Worker
 
