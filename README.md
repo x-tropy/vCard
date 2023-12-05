@@ -1,6 +1,6 @@
-![vcard logo](./public/logo_vcard.png)
+![vcard logo](./public/coverimage_github.png)
 
-> A simplistic online social profile app, augmented with AI + Blockchain.
+> A simplistic online social profile app, augmented with AI and Blockchain.
 
 ## Blocklet Server
 
@@ -126,7 +126,8 @@ slogan: Use vCard to enhance your online presence
 #### ntfs 表
 
 - id 主键
-- profile_id
+- profile_id 外键 INTEGER
+- record 交互记录 JSON（修改 profile，给 profile 评论点赞等）
 
 思考：头像图片并不大，在前端做了压缩和文件大小检验的情况下，直接用数据库存储不会带来性能问题，反而能和其他数据一并发给前端，减少网络延迟。
 
@@ -265,3 +266,16 @@ blocklet deploy .blocklet/bundle --endpoint {your blocklet server url} --access-
 
 - Full specification of `blocklet.yml`: [https://github.com/blocklet/blocklet-specification/blob/main/docs/meta.md](https://github.com/blocklet/blocklet-specification/blob/main/docs/meta.md)
 - Full document of Blocklet Server & blocklet development: [https://developer.blocklet.io/docs/en](https://developer.blocklet.io/docs/en)
+
+## 总结
+
+虽然是一个 3 天不到的小项目，但在实现过程中着重考虑了：
+
+1. 使用场景：即便是虚构，也应该基于现实世界可能发生的 use case 进行延伸。
+2. AI 和区块链：二者都是新一代的重要基础设施，未来会更加普遍、被运用得越来越广泛。每个应用都能通过它们得到方方面面的强化，例如提升效率、降低使用成本、保护隐私、信息安全、内容可信度等等。
+3. 代码抽象：小到数据库表名、变量名、返回值格式、代码注释格式，大到项目代码文件组织和命名，都为易读性、开发效率和后期维护的简便而服务。
+4. 前后端分离：本项目中数据 API 用 Cloudflare Worker 实现，Next.js 虽然是全栈框架，但只在它的后端调用 Worker 提供的 API、以及提前渲染页面（SSR）发给前端展示。这样能把所有与 UI 无关的逻辑都通过 API 来交互，数据 API 可以是 Cloudflare Worker，也可以是 AWS Lamda，或者其他部署在云上的可并发的微服务。
+5. 用户体验：快速高效地产出功能不是唯一目标，还要考虑界面美观、交互友好、流程顺畅、文案易懂。
+6. 工作流程：即使是独立完成，也会产出代码、测试用例、设计文件等各个交付物，而不是一锅乱炖。
+
+这个作品可以体现我在产品构思、编程、UI 设计的深厚积累，以及对 AI 和区块链应用的热情。
