@@ -1,4 +1,4 @@
-![vcard logo](./public/github_cover_image.png)
+![vcard logo](./public/github/cover.png)
 
 > A simplistic online social profile app, augmented with AI and Blockchain.
 
@@ -183,7 +183,7 @@ https://en.m.wikipedia.org/wiki/List_of_country_calling_codes
 - 当 Main 区域小于 768px (md) 时，使用纵向布局
 - 当 Main 区域更大时，横向布局
 
-![responsive layout](./public/responsive_layout.png)
+![responsive layout](./public/github/layout.png)
 
 ## Cloudflare Worker
 
