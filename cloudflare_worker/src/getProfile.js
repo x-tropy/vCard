@@ -6,7 +6,7 @@ export default async (c) => {
 
 	const { results } = await stmt.all();
 
-	console.log('\n>>>>>>>>>>getProfile', results, '<<<<<<<<<<\n');
+	console.log('\n>>>>>>>>>>getProfile\n', results, '\n<<<<<<<<<<\n');
 
 	// Handle exception
 	if (results.length === 0) {
@@ -25,11 +25,11 @@ export default async (c) => {
 	}
 
 	// Success
-	const { id, user_id, name, created_at } = results[0];
+	const { id, user_id, name, created_at, updated_at, birth_date } = results[0];
 
 	return c.json({
 		status: 'success',
 		message: 'user found',
-		data: { id, user_id, name, created_at },
+		data: { id, user_id, name, created_at, updated_at, birth_date },
 	});
 };

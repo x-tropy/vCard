@@ -122,16 +122,21 @@ slogan: Use vCard to enhance your online presence
 - twitter_user_id TEXT
 - instagram_user_id TEXT
 - avatar_id 头像 ID BLOB（当前在用头像的指针）
+- created_at 加入时间 TIMESTAMP
+- updated_at 更新时间 TIMESTAMP
+
+时间格式：YYYY-MM-DD HH:MM:SS
+日期格式：YYYY-MM-DD
 
 #### ntfs 表
 
 - id 主键
 - profile_id 外键 INTEGER
-- record 交互记录 JSON（修改 profile，给 profile 评论点赞等）
+- record 交互记录 JSON（包括修改 profile，给 profile 评论点赞等）
 
 思考：头像图片并不大，在前端做了压缩和文件大小检验的情况下，直接用数据库存储不会带来性能问题，反而能和其他数据一并发给前端，减少网络延迟。
 
-注意：user_id 会用于生成可分享的链接，必须是唯一的，但是也允许修改（不可过于频繁）。
+注意：user_id 会用于生成可分享的链接，必须是唯一的，但是也允许修改（不可过于频繁，10 秒冷却时间）。
 
 ### 数据格式细节
 

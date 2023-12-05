@@ -1,13 +1,17 @@
-export default async (c) => {
-	let { id, user_id, name } = await c.req.json();
+import { formattedDate, formattedTime } from './utils';
 
-	// Satisfy rule: unique
+export default async (c) => {
+	const formData = await c.req.json();
+	console.log('\n>>>>>>>>>>updateProfile\n', formData, '\n<<<<<<<<<<\n');
+	const { id, user_id, name } = formData;
+
+	// Satisfy rule: unique user_id
 	const stmt = c.env.DB.prepare('SELECT * FROM profiles WHERE user_id = ?').bind(user_id);
 
 	const { results } = await stmt.all();
 
-	// Handle exception
-	if (results.length > 0 && results[0].id !== id) {
+	// Handle error
+	if (results.length > 0 && results[0].id != id) {
 		return c.json({
 			status: 'error',
 			msg: 'user_id is occupied',
@@ -19,8 +23,8 @@ export default async (c) => {
 
 	const { results: results2 } = await stmt2.all();
 
-	// Handle exception
-	if (new Date(results2[0].updated_at).getTime() + 10 * 1000 > Date.now()) {
+	// Handle error
+	if (!isCooledDown(results2[0].updated_at, 10)) {
 		return c.json({
 			status: 'error',
 			msg: 'update too frequent',
@@ -28,10 +32,11 @@ export default async (c) => {
 	}
 
 	// Execute update
+	const updated_at = formattedTime(new Date());
 	const stmt3 = c.env.DB.prepare('UPDATE profiles SET user_id = ?, name = ?, updated_at = ? WHERE id = ?').bind(
 		user_id,
 		name,
-		Date.now(),
+		updated_at,
 		id,
 	);
 	const { success } = await stmt3.run();
@@ -49,4 +54,9 @@ export default async (c) => {
 		status: 'success',
 		msg: 'update success',
 	});
+};
+
+// Judge if update is too frequent
+const isCooledDown = (updated_at, duration) => {
+	return new Date(updated_at).getTime() + duration * 1000 < Date.now();
 };
