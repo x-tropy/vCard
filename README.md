@@ -1,5 +1,7 @@
 ![vcard logo](./public/logo_vcard.png)
 
+> A simplistic online social profile app, augmented with AI + Blockchain.
+
 ## Blocklet Server
 
 ### 安装
@@ -87,7 +89,7 @@ slogan: Use vCard to enhance your online presence
 
 命名约定：表名用复数，列名用下划线相连。当引用其他表的 ID 时，使用单数的表名，例如：avatar_id，profile_id
 
-表一：countries
+#### countries 表
 
 - id 主键
 - name 国家名 TEXT
@@ -95,17 +97,17 @@ slogan: Use vCard to enhance your online presence
 
 注意：存在两个国家用同一编码的情况，例如：加拿大和美国，都是 (+1)。
 
-表二：avatars
+#### avatars 表
 
 - id 主键
 - profile_id 头像所属 profile INTEGER
 - avatar 图片 BLOB
 
-表三：profiles
+#### profiles 表
 
 - id 主键
 - name 展示名 TEXT
-- user_id 用户唯一 ID TEXT
+- handle 用户唯一 ID TEXT
 - about 简介 TEXT
 - birth_date 生日 TEXT
 - location_country 所在地 TEXT
@@ -120,6 +122,11 @@ slogan: Use vCard to enhance your online presence
 - twitter_user_id TEXT
 - instagram_user_id TEXT
 - avatar_id 头像 ID BLOB（当前在用头像的指针）
+
+#### ntfs 表
+
+- id 主键
+- profile_id
 
 思考：头像图片并不大，在前端做了压缩和文件大小检验的情况下，直接用数据库存储不会带来性能问题，反而能和其他数据一并发给前端，减少网络延迟。
 
