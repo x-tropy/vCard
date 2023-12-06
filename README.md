@@ -92,7 +92,7 @@ slogan: Use vCard to enhance your online presence
 
 ## 功能开发
 
-### 数据库设计
+### 数据库
 
 命名约定：表名用复数，列名用下划线相连。当引用其他表的 ID 时，使用单数的表名，例如：avatar_id，profile_id
 
@@ -152,7 +152,7 @@ slogan: Use vCard to enhance your online presence
 
 注意：user_id 会用于生成可分享的链接，必须是唯一的，但是也允许修改（不可过于频繁，10 秒冷却时间）。
 
-### 格式细节说明
+#### 格式细节说明
 
 手机号由两部分做成，国家电话编码最多 3 位，手机号总共最多 15 位（含国家电话编码）
 
@@ -166,6 +166,19 @@ https://en.m.wikipedia.org/wiki/List_of_country_calling_codes
 社交帐户只记录用户 id，在前端拼成完整的 URL。
 
 生日、所在地、工作状态等字段用 TEXT 保存，后端不作强校验，前端校验格式和允许的值范围即可。
+
+### 路由
+
+| route      | decription                           |
+| ---------- | ------------------------------------ |
+| /          | 落地页（首页）                       |
+| /buweiliao | 展示 `user_id` 为 `buweiliao` 的名片 |
+| /new       | 新建名片                             |
+| /discover  | 浏览平台中其他人的名片               |
+
+![route design](/public/github/route.png)
+
+名片页既用于展示，也承担编辑功能（该用户已登录且是他本人名片的情况下），不需要跳转。
 
 ### 缓存管理
 
@@ -187,7 +200,7 @@ https://en.m.wikipedia.org/wiki/List_of_country_calling_codes
 
 ## Cloudflare Worker
 
-`pnpm create cloudflare@latest` 新建一个 Cloudflare Worker，用于负责与数据库的交互，亦即提供 data API。
+`pnpm create cloudflare@latest` 新建一个 Cloudflare Worker，与数据库直接交互，为前端提供数据 API 服务。
 
 - `/api/profile/:user_id (GET)`：取出 profile 所有字段，包括头像。
 - `/api/profile/:user_id (POST)`：更新 profile，忽略值为 null 的字段。
@@ -196,6 +209,19 @@ https://en.m.wikipedia.org/wiki/List_of_country_calling_codes
 - `/api/avatars/:user_id`：取出最近使用的头像（最多 5 个）
 - `/api/countries`：取出所有国家的信息。
 - `/api/check/user/:user_id`：检查某个 User ID 是否已经被占用了，占用则不能使用该 ID。
+
+| API endpoint          | method | description                       |
+| --------------------- | ------ | --------------------------------- |
+| /api                  | GET    | all available API endpoints       |
+| /api/profile/:user_id | GET    | get user's profile                |
+| /api/profile          | POST   | update user profile (id required) |
+| /api/avatar/:user_id  | GET    | get current avatar                |
+| /api/avatars/:user_id | GET    | get recent avatars (5)            |
+| /api/countries        | GET    | get a list of all countries       |
+| /api/claim/:user_id   | POST   | check if a user id is vacant      |
+| /api/nfts/:user_id    | GET    | get NFTs                          |
+
+查看所有目前可用的 API 端点：[vcard.buweiliao.workers.dev/api](https://vcard.buweiliao.workers.dev/api?pretty)
 
 ### 数据库 Binding
 
