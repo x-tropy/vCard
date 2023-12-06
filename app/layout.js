@@ -1,7 +1,9 @@
-import '@/styles/globals.css';
+import '../styles/globals.css';
 
 // Optimize font display
 import { Inter as FontSans } from 'next/font/google';
+
+import { cn } from 'lib/utils';
 
 export const fontSans = FontSans({
   subsets: ['latin'],
@@ -17,7 +19,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en" suppressHydrationWarning={true}>
-      <body className={`font-sans antialiased ${fontSans.variable}`}>{children}</body>
+      <body className={cn('min-h-screen bg-background font-sans antialiased', fontSans.variable)}>{children}</body>
     </html>
   );
 }
