@@ -1,5 +1,6 @@
 import { getProfile } from 'lib/db';
-import ProfileEditor from 'lib/components/ProfileEditor';
+import { TabPanelTitle } from 'lib/components/Misc';
+import TabPreview from 'lib/components/TabPreview';
 
 const App = async ({ params: { slug } }) => {
   // Request data
@@ -8,7 +9,14 @@ const App = async ({ params: { slug } }) => {
   // Hanlde error
   if (result.status == 'error') return <h1>{result.message}</h1>;
 
-  return <ProfileEditor data={result.data} />;
+  const { name, user_id, created_at } = result.data;
+
+  return (
+    <div className="space-y-6">
+      <TabPanelTitle title="Preview" description="This is how others will see you on the site." />
+      <TabPreview name={name} user_id={user_id} created_at={created_at} />
+    </div>
+  );
 };
 
 export default App;

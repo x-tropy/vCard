@@ -1,6 +1,10 @@
 import SidebarNav from 'lib/components/SidebarNav';
 import { Separator } from 'lib/components/ui/separator';
 
+export const metadata = {
+  title: 'Edit profile',
+};
+
 export default function ProfileLayout({ children, params: { slug } }) {
   const sidebarNavItems = [
     { title: 'Preview', href: `/${slug}` },
