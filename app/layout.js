@@ -2,7 +2,6 @@ import '../styles/globals.css';
 import Link from 'next/link';
 import Avatar from 'lib/components/Avatar';
 import { NavItem } from 'lib/components/Misc';
-import Image from 'next/image';
 
 // Optimize font display
 import { Inter as FontSans } from 'next/font/google';
@@ -15,8 +14,8 @@ export const fontSans = FontSans({
 });
 
 export const metadata = {
-  title: 'vCard',
-  description: 'A blocklet app',
+  title: 'vCard | Home',
+  description: 'A Web3 profile app',
 };
 
 // Note: suppress HydrationWarning
@@ -28,7 +27,7 @@ export default function RootLayout({ children }) {
           <div className="container mx-auto py-3 max-w-7xl justify-between flex flex-row items-center">
             <div className="flex flex-row space-x-6 lg:space-x-8 items-center">
               <Link href="/">
-                <Image src="/logo_vcard.png" alt="vCard logo" className="h-7" />
+                <img src="/logo_vcard.png" alt="vCard logo" className="h-7" />
               </Link>
               <NavItem title="How it works" href="/" />
               <NavItem title="Play with demo" href="/demo" />
@@ -37,6 +36,9 @@ export default function RootLayout({ children }) {
           </div>
         </header>
         <main className="container mx-auto max-w-7xl">{children}</main>
+        <footer className="container mx-auto max-w-7xl py-8 text-sm text-muted-foreground text-center">
+          © 2023 vCard. All rights reserved.
+        </footer>
       </body>
     </html>
   );
