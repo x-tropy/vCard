@@ -92,6 +92,10 @@ slogan: Use vCard to enhance your online presence
 
 ## 功能开发
 
+### 整体架构
+
+![architecture design](./public/github/architecture.png)
+
 ### 数据库
 
 命名约定：表名用复数，列名用下划线相连。当引用其他表的 ID 时，使用单数的表名，例如：avatar_id，profile_id
