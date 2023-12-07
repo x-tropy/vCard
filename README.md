@@ -118,8 +118,8 @@ slogan: Use vCard to enhance your online presence
 
 - id 主键
 - name 展示名 TEXT
-- handle 用户唯一 ID TEXT
-- about 简介 TEXT
+- user_id 用户唯一 ID TEXT
+- bio 简介 TEXT
 - birth_date 生日 TEXT
 - location_country 所在地 TEXT
 - working_status 工作状态 TEXT
@@ -132,7 +132,7 @@ slogan: Use vCard to enhance your online presence
 - github_user_id TEXT
 - twitter_user_id TEXT
 - instagram_user_id TEXT
-- avatar_id 头像 ID BLOB（当前在用头像的指针）
+- avatar_id 头像 ID INTEGER（当前在用头像的指针）
 - created_at 加入时间 TIMESTAMP
 - updated_at 更新时间 TIMESTAMP
 

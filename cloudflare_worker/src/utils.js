@@ -7,4 +7,7 @@ const formattedDate = (time) => `${time.getFullYear()}-${padZero(time.getMonth()
 const formattedTime = (time) =>
 	formattedDate(time) + ` ${padZero(time.getHours())}:${padZero(time.getMinutes())}:${padZero(time.getSeconds())}`;
 
-export { formattedDate, formattedTime };
+// Hardcoded list of working status
+const working_status = ['Working remotely', 'Working onsite', 'Open to new opportunities'];
+
+export { formattedDate, formattedTime, working_status };

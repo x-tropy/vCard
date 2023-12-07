@@ -1,3 +1,5 @@
+import { working_status } from './utils';
+
 export default async (c) => {
 	// Note: add prefix to query param
 	const param_user_id = c.req.param('user_id');
@@ -6,8 +8,8 @@ export default async (c) => {
 
 	const { results } = await stmt.all();
 
-	console.log('\n>>>>>>>>\n', 'getProfile', '\n', results, '\n<<<<<<<<\n');
-	// Handle exception
+	console.log('\n>>>>>>>>\n', 'DB:Get:Profile', '\n', results, '\n<<<<<<<<\n');
+	// Handle error
 	if (results.length === 0) {
 		return c.json({
 			status: 'error',
@@ -15,7 +17,7 @@ export default async (c) => {
 		});
 	}
 
-	// Handle exception
+	// Handle error
 	if (results.length > 1) {
 		return c.json({
 			status: 'error',
@@ -24,11 +26,17 @@ export default async (c) => {
 	}
 
 	// Success
-	const { id, user_id, name, created_at, updated_at, birth_date } = results[0];
-
+	// Send working_status enum and countries list as meta data
+	const countries = await c.env.DB.prepare('SELECT * FROM countries').all();
 	return c.json({
 		status: 'success',
 		message: 'user found',
-		data: { id, user_id, name, created_at, updated_at, birth_date },
+		data: {
+			...results[0],
+			meta: {
+				working_status,
+				countries: countries.results,
+			},
+		},
 	});
 };
