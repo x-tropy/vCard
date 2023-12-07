@@ -2,6 +2,8 @@ import '../styles/globals.css';
 import Link from 'next/link';
 import Avatar from 'lib/components/Avatar';
 import { NavItem } from 'lib/components/Misc';
+import { getDemoUser } from 'lib/db';
+import Image from 'next/image';
 
 // Optimize font display
 import { Inter as FontSans } from 'next/font/google';
@@ -19,7 +21,8 @@ export const metadata = {
 };
 
 // Note: suppress HydrationWarning
-export default function RootLayout({ children }) {
+export default async function RootLayout({ children }) {
+  const user_id = await getDemoUser();
   return (
     <html lang="en" suppressHydrationWarning={true}>
       <body className={cn('min-h-screen bg-background font-sans antialiased', fontSans.variable)}>
@@ -27,10 +30,10 @@ export default function RootLayout({ children }) {
           <div className="container mx-auto py-3 max-w-7xl justify-between flex flex-row items-center">
             <div className="flex flex-row space-x-6 lg:space-x-8 items-center">
               <Link href="/">
-                <img src="/logo_vcard.png" alt="vCard logo" className="h-7" />
+                <Image src="/logo_vcard.png" alt="vCard logo" width="100" height="28" />
               </Link>
               <NavItem title="How it works" href="/" />
-              <NavItem title="Play with demo" href="/demo" />
+              <NavItem title="Play with demo" href={user_id} />
             </div>
             <Avatar size="sm" shape="circle" />
           </div>

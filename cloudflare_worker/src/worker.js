@@ -22,6 +22,7 @@ api.get('/', (c) => {
 		'/api/avatars/:user_id': 'get recent avatars of a user',
 		'/api/countries': 'get a list of all countries',
 		'/api/check/user/:user_id': 'check if a user id already exists',
+		'/api/demouser': 'get the user_id of the demo user',
 	});
 });
 
@@ -30,3 +31,10 @@ api.get('/profile/:user_id', getProfile);
 
 // Update a profile
 api.post('/profile', updateProfile);
+
+// Get the demo user's user_id
+api.get('/demouser', async (c) => {
+	const stmt = c.env.DB.prepare('SELECT user_id FROM profiles WHERE id = ?').bind(1);
+	const { results } = await stmt.all(1);
+	return c.json(results[0]);
+});
