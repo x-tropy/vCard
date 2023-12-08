@@ -24,8 +24,8 @@ create table "profiles" (
   "updated_at" datetime default current_timestamp
 );
 -- Example data
-insert into "profiles" ("name", "user_id", "bio", "birth_date") values ('🔥Buwei廖', 'demouser', "I'm a full-stack developer, blockchain enthusiast, and a lifelong learner. Also, I'm hamburger master, able to make delicious 🍔🍔🍔!", "1992-10-01");
-insert into "profiles" ("name", "user_id", "bio", "birth_date") values ('🔥Buwei廖', 'demo2', "I'm a full-stack developer, blockchain enthusiast, and a lifelong learner. Also, I'm hamburger master, able to make delicious 🍔🍔🍔!", "1992-10-01");
+insert into "profiles" ("name", "user_id", "bio", "birth_date") values ('🔥Buwei廖', 'demoid', "I'm a full-stack developer, blockchain enthusiast, and a lifelong learner. Also, I'm hamburger master, able to make delicious 🍔🍔🍔!", "1992-10-01");
+insert into "profiles" ("name", "user_id", "bio", "birth_date") values ('🔥Buwei廖', 'demoid2', "I'm a full-stack developer, blockchain enthusiast, and a lifelong learner. Also, I'm hamburger master, able to make delicious 🍔🍔🍔!", "1992-10-01");
 
 create table "nfts" (
   "id" integer primary key autoincrement,

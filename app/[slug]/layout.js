@@ -15,8 +15,8 @@ export default function ProfileLayout({ children, params: { slug } }) {
   ];
 
   return (
-    <div className="overflow-hidden my-8 rounded-[0.5rem] border bg-background shadow">
-      <div className="space-y-6 p-10 pb-16">
+    <div className="overflow-hidden my-8 rounded-[0.5rem]  sm:border bg-background sm:shadow">
+      <div className="space-y-6 sm:p-10 sm:pb-16">
         <div className="space-y-0.5">
           <h2 className="text-2xl font-bold tracking-tight capitalize">profile settings</h2>
           <p className="text-muted-foreground">Edit your profile settings and check seurity options.</p>
