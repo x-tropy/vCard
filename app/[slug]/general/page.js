@@ -16,5 +16,3 @@ export default async function Page({ params: { slug } }) {
     </div>
   );
 }
-
-export const runtime = 'edge';
