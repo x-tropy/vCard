@@ -41,3 +41,5 @@ const App = async ({ params: { slug } }) => {
 };
 
 export default App;
+
+export const runtime = 'edge';

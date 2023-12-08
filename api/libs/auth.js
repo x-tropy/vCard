@@ -20,3 +20,5 @@ module.exports = {
   handlers,
   wallet,
 };
+
+export const runtime = 'edge';
