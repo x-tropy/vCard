@@ -4,5 +4,3 @@ module.exports = {
   ...env,
   chainHost: process.env.CHAIN_HOST || '',
 };
-
-export const runtime = 'edge';
