@@ -39,7 +39,7 @@ create table "nfts" (
 create table "avatars" (
   "id" integer primary key autoincrement,
   "profile_id" integer not null,
-  "avatar" blob not null
+  "avatar" text not null
 );
 
 create table "countries" (

@@ -1,7 +1,7 @@
 import { Button } from 'lib/components/ui/button';
 import Link from 'next/link';
 import { getDemoUser } from 'lib/db';
-import { Mail, Play } from 'lucide-react';
+import { Mail, Play, Info } from 'lucide-react';
 
 export default async function App() {
   const user_id = await getDemoUser();
@@ -25,10 +25,15 @@ export default async function App() {
           <Link href="mailto:buweiliao@gmail.com">Contact author</Link>
         </Button>
       </section>
-      <div className="sm:w-1/3 text-xs text-muted-foreground leading-5">
-        Couldn&lsquo;t reach demo user? That&lsquo;s because you have changed the user_id of demo user! Try a hard
-        refresh with <code className="text-xs bg-slate-50 rounded-sm px-1">Command + Shift + R</code>, or{' '}
-        <code className="text-xs bg-slate-50 rounded-sm px-1">Ctrl + Shift + R</code> if you&lsquo;re on Windows.
+      <div className="sm:w-1/3 text-xs text-muted-foreground leading-5 flex flex-row">
+        <div>
+          <Info className="mr-2 h-4 w-4 text-muted-foreground" />
+        </div>
+        <div>
+          Couldn&lsquo;t reach demo user? That&lsquo;s because you have changed the user_id of demo user! Try a hard
+          refresh with <code className="text-xs bg-slate-50 rounded-sm px-1">Command + Shift + R</code>, or{' '}
+          <code className="text-xs bg-slate-50 rounded-sm px-1">Ctrl + Shift + R</code> if you&lsquo;re on Windows.
+        </div>
       </div>
     </div>
   );

@@ -1,7 +1,6 @@
 # 新增的配置
 
 .next
-pnpm-lock.yaml
 .husky
 .github
 .env

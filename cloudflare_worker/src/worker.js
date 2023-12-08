@@ -5,6 +5,8 @@ import { cors } from 'hono/cors';
 // Split concerns
 import getProfile from './getProfile.js';
 import updateProfile from './updateProfile.js';
+import getAvatar from './getAvatar.js';
+import updateAvatar from './updateAvatar.js';
 
 const api = new Hono().basePath('/api');
 api.use('/*', prettyJSON({ space: 2 }));
@@ -38,3 +40,9 @@ api.get('/demouser', async (c) => {
 	const { results } = await stmt.all(1);
 	return c.json(results[0]);
 });
+
+// Add or update a avatar
+api.post('/avatar', updateAvatar);
+
+// Get a avatar
+api.get('/avatar/:user_id', getAvatar);
