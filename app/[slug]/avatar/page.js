@@ -1,3 +1,3 @@
 export default function Page() {
-  return <h1>General</h1>;
+  return <h1>react-avatar-edit</h1>;
 }

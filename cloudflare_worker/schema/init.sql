@@ -3,11 +3,6 @@ drop table if exists "nfts";
 drop table if exists "countries";
 drop table if exists "avatars";
 
--- Note:
--- 1. Every SQL statement must end with a semicolon (;)
--- 2. No (,) at the end of the last statement
--- 3. Don't put comments in the top of the file, otherwise it will cause error
-
 create table "profiles" (
   "id" integer primary key autoincrement,
   "name" text not null,
@@ -30,6 +25,7 @@ create table "profiles" (
 );
 -- Example data
 insert into "profiles" ("name", "user_id", "bio", "birth_date") values ('🔥Buwei廖', 'demouser', "I'm a full-stack developer, blockchain enthusiast, and a lifelong learner. Also, I'm hamburger master, able to make delicious 🍔🍔🍔!", "1992-10-01");
+insert into "profiles" ("name", "user_id", "bio", "birth_date") values ('🔥Buwei廖', 'demo2', "I'm a full-stack developer, blockchain enthusiast, and a lifelong learner. Also, I'm hamburger master, able to make delicious 🍔🍔🍔!", "1992-10-01");
 
 create table "nfts" (
   "id" integer primary key autoincrement,

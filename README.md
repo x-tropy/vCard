@@ -2,6 +2,14 @@
 
 > A simplistic online social profile app, augmented with AI and Blockchain.
 
+### [在线访问地址](a)
+
+可在线体验的 Demo：
+
+### [数据 API 地址](https://vcard.buweiliao.workers.dev/api?pretty)
+
+可公开测试的 API：https://vcard.buweiliao.workers.dev/api?pretty
+
 <!-- make a gif, to showcase the UI -->
 
 ## Blocklet Server
