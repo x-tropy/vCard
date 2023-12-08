@@ -1,6 +1,5 @@
 export default async (c) => {
 	const param_user_id = c.req.param('user_id');
-	console.log('\n>>>>>>>>\n', 'DB:getAvatar', '\n', param_user_id, '\n<<<<<<<<\n');
 
 	// 1. Get the user's profile id
 	const stmt = c.env.DB.prepare('SELECT id FROM profiles WHERE user_id = ?').bind(param_user_id);
@@ -19,7 +18,6 @@ export default async (c) => {
 	const stmt2 = c.env.DB.prepare('SELECT * FROM avatars WHERE profile_id = ?').bind(results[0].id);
 
 	const { results: results2 } = await stmt2.all();
-	console.log('\n>>>>>>>>\n', 'result 2', '\n', results2, '\n<<<<<<<<\n');
 
 	// Handle error
 	// avatar not found
