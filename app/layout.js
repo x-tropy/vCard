@@ -3,6 +3,7 @@ import Link from 'next/link';
 import Avatar from 'lib/components/Avatar';
 import { NavItem } from 'lib/components/Misc';
 import { getDemoUser } from 'lib/db';
+import { getAvatar } from 'lib/db';
 import Image from 'next/image';
 
 // Optimize font display
@@ -23,6 +24,7 @@ export const metadata = {
 // Note: suppress HydrationWarning
 export default async function RootLayout({ children }) {
   const user_id = await getDemoUser();
+  const avatarResponse = await getAvatar(user_id);
   return (
     <html lang="en" suppressHydrationWarning={true}>
       <body className={cn('min-h-screen bg-background font-sans antialiased', fontSans.variable)}>
@@ -35,7 +37,7 @@ export default async function RootLayout({ children }) {
               <NavItem title="How it works" href="/" />
               <NavItem title="Play with demo" href={user_id} />
             </div>
-            <Avatar size="sm" shape="circle" />
+            <Avatar size="sm" shape="circle" src={avatarResponse.data.avatar} />
           </div>
         </header>
         <main className="container mx-auto max-w-7xl">{children}</main>

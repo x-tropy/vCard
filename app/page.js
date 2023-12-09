@@ -7,7 +7,7 @@ export default async function App() {
   const user_id = await getDemoUser();
 
   return (
-    <div className="flex h-screen max-w-[980px] flex-col items-start space-y-6 px-8 pt-8 md:pt-12 page-header pb-8">
+    <div className="flex h-screen max-w-[980px] flex-col items-start space-y-6 lg:px-8 pt-8 md:pt-12 page-header pb-8">
       <h1 className="text-3xl font-bold leading-tight tracking-tight md:text-4xl lg:leading-[1.1]">
         Claim your profile in Web3 space
       </h1>
@@ -25,7 +25,7 @@ export default async function App() {
           <Link href="mailto:buweiliao@gmail.com">Contact author</Link>
         </Button>
       </section>
-      <div className="sm:w-1/3 text-xs text-muted-foreground leading-5 flex flex-row">
+      {/* <div className="sm:w-1/3 text-xs text-muted-foreground leading-5 flex flex-row">
         <div>
           <Info className="mr-2 h-4 w-4 text-muted-foreground" />
         </div>
@@ -34,7 +34,7 @@ export default async function App() {
           refresh with <code className="text-xs bg-slate-50 rounded-sm px-1">Command + Shift + R</code>, or{' '}
           <code className="text-xs bg-slate-50 rounded-sm px-1">Ctrl + Shift + R</code> if you&lsquo;re on Windows.
         </div>
-      </div>
+      </div> */}
     </div>
   );
 }

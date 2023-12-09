@@ -20,7 +20,6 @@ const getDevNextConfig = () => {
 };
 
 const nextConfig = {
-  experimental: { runtime: 'experimental-edge' },
   reactStrictMode: false,
   ...getDevNextConfig(),
 };
